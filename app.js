@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // Sample variables
-const a = 10;
+const a = 20;
 const b = 2;
 
 // Routes
