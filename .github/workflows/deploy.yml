@@ -1,0 +1,65 @@
+# SAMPLE CI/CD SETUP
+
+# Name of the CI/CD pipeline
+name: CI/CD Pipeline - Node.js App
+
+# Trigger the pipeline on push events to the development branch
+on:
+  push:
+    branches:
+      - development
+
+# Define the jobs to be executed
+jobs:
+  build:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout (clone) the repository into the GitHub Actions runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install Node.js runtime on the runner
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      # Install project dependencies defined in package.json
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run application sanity check
+        run: |
+          node app.js &
+          sleep 5
+          echo "Application started successfully"
+
+      - name: CI completed
+        run: echo "Build stage successful"
+
+  # ---------------- DEPLOYMENT JOB ----------------
+  # This will be enabled after EC2 setup
+
+  # deploy:
+  #   name: Deploy to EC2
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   # Comment out the entire job until EC2 is ready
+  #   if: false
+
+  #   steps:
+  #     - name: Deploy via SSH
+  #       uses: appleboy/ssh-action@v1.0.0
+  #       with:
+  #         host: ${{ secrets.EC2_HOST }}
+  #         username: ${{ secrets.EC2_USER }}
+  #         key: ${{ secrets.EC2_KEY }}
+  #         script: |
+  #           cd ~/Demo_gitAction-1
+  #           git pull origin development
+  #           npm install
+  #           pm2 restart demo-app
