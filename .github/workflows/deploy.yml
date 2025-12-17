@@ -43,23 +43,23 @@ jobs:
   # ---------------- DEPLOYMENT JOB ----------------
   # This will be enabled after EC2 setup
 
-  # deploy:
-  #   name: Deploy to EC2
-  #   needs: build
-  #   runs-on: ubuntu-latest
+  deploy:
+    name: Deploy to EC2
+    needs: build
+    runs-on: ubuntu-latest
 
-  #   # Comment out the entire job until EC2 is ready
-  #   if: false
+    # Comment out the entire job until EC2 is ready
+    if: false
 
-  #   steps:
-  #     - name: Deploy via SSH
-  #       uses: appleboy/ssh-action@v1.0.0
-  #       with:
-  #         host: ${{ secrets.EC2_HOST }}
-  #         username: ${{ secrets.EC2_USER }}
-  #         key: ${{ secrets.EC2_KEY }}
-  #         script: |
-  #           cd ~/Demo_gitAction-1
-  #           git pull origin development
-  #           npm install
-  #           pm2 restart demo-app
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/Demo_gitAction-1
+            git pull origin development
+            npm install
+            pm2 restart demo-app
