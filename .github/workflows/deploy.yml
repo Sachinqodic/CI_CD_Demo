@@ -49,7 +49,6 @@ jobs:
     runs-on: ubuntu-latest
 
     # Comment out the entire job until EC2 is ready
-    if: false
 
     steps:
       - name: Deploy via SSH
