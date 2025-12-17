@@ -7,7 +7,7 @@ app.use(express.json());
 
 // Sample variables
 const a = 20;
-const b = 2;
+const b = 12;
 
 // Routes
 app.get("/", (req, res) => {
